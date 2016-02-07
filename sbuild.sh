@@ -17,17 +17,17 @@ BASE_F4K_VER=$BASE_F4K_VER-$VARIANT
 F4K_VER=$BASE_F4K_VER$VER
 
 export LOCALVERSION="-"`echo $F4K_VER`
-export CROSS_COMPILE=/home/lilferraro/toolchains/arm-cortex_a7-linux-gnueabihf-linaro_4.9.4-2015.06/bin/arm-cortex_a7-linux-gnueabihf-
+export CROSS_COMPILE=/home/lilferraro/toolchains/arm-cortex_a15-linux-gnueabihf-linaro_4.9.4-2015.06/bin/arm-cortex_a15-linux-gnueabihf-
 export ARCH=arm
 export KBUILD_BUILD_USER=lilferraro
 export KBUILD_BUILD_HOST="gnome.1x64"
 
 echo
-echo "Making f4ktion_defconfig"
+echo "Making z_defconfig"
 
 DATE_START=$(date +"%s")
 
-make VARIANT_DEFCONFIG=msm8930_lt02_$VARIANT"_defconfig" f4ktion_defconfig
+make VARIANT_DEFCONFIG=msm8930_lt02_$VARIANT"_defconfig" z_defconfig
 
 INIT_DIR=../ramdisks_lp
 MODULES_DIR=../filesdir/$VARIANT/lib/modules
