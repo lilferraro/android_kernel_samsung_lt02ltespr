@@ -1,4 +1,4 @@
-/* Copyright (c) 2010-2013, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2010-2013, 2015, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -22,7 +22,6 @@ struct ddl_context *ddl_get_context(void)
 	return &ddl_context;
 }
 
-#ifdef DDL_MSG_LOG
 s8 *ddl_get_state_string(enum ddl_client_state client_state)
 {
 	s8 *ptr;
@@ -70,7 +69,6 @@ s8 *ddl_get_state_string(enum ddl_client_state client_state)
 	}
 	return ptr;
 }
-#endif
 
 u32 ddl_client_transact(u32 operation,
 	struct ddl_client_context **pddl_client)
@@ -1035,6 +1033,8 @@ u32 ddl_check_reconfig(struct ddl_client_context *ddl)
 	if (decoder->cont_mode) {
 		if ((decoder->actual_output_buf_req.sz <=
 			 decoder->client_output_buf_req.sz) &&
+			 decoder->frame_size.width <= decoder->adaptive_width &&
+			 decoder->frame_size.height <= decoder->adaptive_height &&
 			(decoder->actual_output_buf_req.actual_count <=
 			 decoder->client_output_buf_req.actual_count)) {
 			need_reconfig = false;
@@ -1091,8 +1091,23 @@ u32 ddl_check_reconfig(struct ddl_client_context *ddl)
 void ddl_handle_reconfig(u32 res_change, struct ddl_client_context *ddl)
 {
 	struct ddl_decoder_data *decoder = &ddl->codec_data.decoder;
+	struct vidc_1080p_dec_disp_info *dec_disp_info =
+		&(decoder->dec_disp_info);
+
+	u32 width = 0;
+	u32 height = 0;
+	u32 adaptive_width = 0;
+	u32 adaptive_height = 0;
+
+	width = DDL_ALIGN(dec_disp_info->img_size_x, DDL_TILE_ALIGN_WIDTH);
+	height = DDL_ALIGN(dec_disp_info->img_size_y, DDL_TILE_ALIGN_HEIGHT);
+
+	adaptive_width = DDL_ALIGN(decoder->adaptive_width, DDL_TILE_ALIGN_WIDTH);
+	adaptive_height = DDL_ALIGN(decoder->adaptive_height, DDL_TILE_ALIGN_HEIGHT);
+
 	if ((decoder->cont_mode) &&
-		(res_change == DDL_RESL_CHANGE_DECREASED)) {
+		(res_change == DDL_RESL_CHANGE_DECREASED) &&
+		width <= adaptive_width && height <= adaptive_height) {
 		DDL_MSG_LOW("%s Resolution decreased, continue decoding\n",
 				 __func__);
 		vidc_sm_get_min_yc_dpb_sizes(

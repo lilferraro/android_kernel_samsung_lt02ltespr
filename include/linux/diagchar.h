@@ -734,9 +734,6 @@ static const uint32_t msg_bld_masks_22[] = {
 	MSG_LVL_LOW,
 	MSG_LVL_LOW,
 	MSG_LVL_LOW,
-	MSG_LVL_LOW,
-	MSG_LVL_LOW,
-	MSG_LVL_LOW,
 	MSG_LVL_LOW
 };
 

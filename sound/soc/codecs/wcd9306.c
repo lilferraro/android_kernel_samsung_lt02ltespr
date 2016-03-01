@@ -3030,6 +3030,7 @@ static int tapan_volatile(struct snd_soc_codec *ssc, unsigned int reg)
 }
 
 #define TAPAN_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
+
 #ifdef CONFIG_SOUND_CONTROL_HAX_3_GPL
 extern int snd_hax_reg_access(unsigned int);
 extern unsigned int snd_hax_cache_read(unsigned int);
@@ -3067,21 +3068,16 @@ unsigned int tapan_read(struct snd_soc_codec *codec,
 EXPORT_SYMBOL(tapan_read);
 #endif
 
-#ifdef CONFIG_SOUND_CONTROL_HAX_3_GPL
-extern int reg_access(unsigned int);
-#endif
-
 #ifndef CONFIG_SOUND_CONTROL_HAX_3_GPL
 static
 #endif
 int tapan_write(struct snd_soc_codec *codec, unsigned int reg,
-	unsigned int value)
+				unsigned int value)
 {
 	int ret;
 #ifdef CONFIG_SOUND_CONTROL_HAX_3_GPL
 	int val;
 #endif
-
 	if (reg == SND_SOC_NOPM)
 		return 0;
 
@@ -3107,8 +3103,6 @@ int tapan_write(struct snd_soc_codec *codec, unsigned int reg,
 #else
 	return wcd9xxx_reg_write(codec->control_data, reg, value);
 #endif
-
-	return wcd9xxx_reg_write(codec->control_data, reg, value);
 }
 #ifdef CONFIG_SOUND_CONTROL_HAX_3_GPL
 EXPORT_SYMBOL(tapan_write);

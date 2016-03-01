@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_F4K_VER="zkernel_0.0.1"
+BASE_F4K_VER="linaro_kernel_0.0.8"
 
 case "$1" in
         spr)
@@ -23,11 +23,11 @@ export KBUILD_BUILD_USER=lilferraro
 export KBUILD_BUILD_HOST="gnome.1x64"
 
 echo
-echo "Making z_defconfig"
+echo "Making bliss_defconfig"
 
 DATE_START=$(date +"%s")
 
-make VARIANT_DEFCONFIG=msm8930_lt02_$VARIANT"_defconfig" z_defconfig
+make VARIANT_DEFCONFIG=msm8930_lt02_$VARIANT"_defconfig" bliss_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 
 INIT_DIR=../ramdisks_lp
 MODULES_DIR=../filesdir/$VARIANT/lib/modules

@@ -16,7 +16,6 @@
 #include <linux/quotaops.h>
 #include <linux/backing-dev.h>
 #include "internal.h"
-
 #ifdef CONFIG_DYNAMIC_FSYNC
 extern bool early_suspend_active;
 extern bool dyn_fsync_active;
@@ -259,7 +258,7 @@ EXPORT_SYMBOL(vfs_fsync_range);
  * set only metadata needed to access modified file data is written.
  */
 int vfs_fsync(struct file *file, int datasync)
-{	
+{
 	return vfs_fsync_range(file, 0, LLONG_MAX, datasync);
 }
 EXPORT_SYMBOL(vfs_fsync);
@@ -360,7 +359,7 @@ no_async:
 #endif
 		fsync_t = ktime_get();
 		ret = vfs_fsync(file, datasync);
-		 fput_light(file, fput_needed);
+		fput_light(file, fput_needed);
 		fsync_diff = ktime_sub(ktime_get(), fsync_t);
 		if (ktime_to_ms(fsync_diff) >= 5000) {
 			pr_info("VFS: %s pid:%d(%s)(parent:%d/%s)\

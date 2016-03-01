@@ -24,4 +24,3 @@ extern unsigned int cpufreq_hardlimit;
 unsigned int check_cpufreq_hardlimit(unsigned int freq);
 
 #endif
-

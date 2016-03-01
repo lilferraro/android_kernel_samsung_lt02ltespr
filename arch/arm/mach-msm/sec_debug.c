@@ -206,7 +206,7 @@ static char *sec_build_time[] = {
 	__DATE__,
 	__TIME__
 };
-static char build_root[] = __FILE__;
+
 
 
 /* klaatu - schedule log */

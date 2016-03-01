@@ -240,7 +240,7 @@ static int __init sec_misc_init(void)
 		goto failed_register_misc;
 	}
 
-	sec_misc_dev = device_create(sec_class, NULL, 0, NULL, "sec_misc");
+	/*sec_misc_dev = device_create(sec_class, NULL, 0, NULL, "sec_misc");*/
 	if (IS_ERR(sec_misc_dev)) {
 		printk(KERN_ERR "failed to create device!\n");
 		ret = -ENODEV;

@@ -1348,4 +1348,4 @@ module_exit(msm_hotplug_exit);
 MODULE_AUTHOR("Fluxi <linflux@arcor.de>");
 MODULE_DESCRIPTION("MSM Hotplug Driver");
 MODULE_LICENSE("GPLv2");
-
+ 

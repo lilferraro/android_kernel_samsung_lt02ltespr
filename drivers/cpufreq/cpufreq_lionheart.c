@@ -1,4 +1,4 @@
-/*
+ /*
 * drivers/cpufreq/cpufreq_lionheart.c
 *
 * Patched & tweaked: knzo
